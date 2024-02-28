@@ -5,9 +5,9 @@
 
 <img src="https://leap-stc.github.io/ClimSim/_images/fig_1.png" alt="climsim" width="300"/>
 
-Term: Fall 2023
+Term: Spring 2024
 
-+ Team ##
++ Team Group 11
 + Team members
 	+ Colin Chan
 	+ Sally Zhao
