@@ -7,11 +7,11 @@ Term: Spring 2024
 
 + Team ##
 + Team members
-	+ team member 1
-	+ team member 2
-	+ team member 3
-	+ team member 4
-	+ team member 5
+	+ Colin Chan
+	+ Sally Zhao
+	+ Shoufei Meng
+	+ Chulin Tang
+	+ Peng Jiang
 
 + Project summary: In this project, we created ...
 	
