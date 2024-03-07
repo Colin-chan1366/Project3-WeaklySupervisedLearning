@@ -1,115 +1,146 @@
-## STAT GU4243/GR5243 Fall 2023 Applied Data Science 
+## STAT GU4243/GR5243 Spring 2024 Applied Data Science 
 
-### Project 3: ClimSim - Machine Learning for Climate Modeling 
+### Project 3: Weakly supervised learning: label noise and correction
 
-<img src="https://leap-stc.github.io/ClimSim/_images/fig_1.png" alt="climsim" width="400"/>
 
-In this project, you are invited to participate and contribute to [ClimSim](https://leap-stc.github.io/ClimSim/README.html), an ongoing machine learning research project of [LEAP (Learning the Earth with AI and Physics) Center](https://leap.columbia.edu), an NSF funded Science and Technology Center. 
+In this project, we will carry out **model evaluation and selection** for predictive analytics on an imbalanced image data. As data scientists, we often need to **evaluate** different modeling/analysis strategies and decide what is the best. Such decisions need to be supported by sound evidence in the form of *model assessment, validation and comparison*. In addition, we also need to **communicate our decision and supporting evidence** clearly and convincingly in an accessible fashion.
 
-[LEAP's mission](https://leap.columbia.edu/about/) is to *to increase the reliability, utility, and reach of climate projections through the integration of climate and data science*. As part of LEAP's research, the **ClimSim** team produced the largest-ever dataset designed for hybrid ML-physics research and hosts a GitHub repo with demo notebooks and tutorials. The raw data sets (with a total size of 42+ TB) are hosted on [huggingface](https://huggingface.co/LEAP). The team's [paper](https://arxiv.org/abs/2306.08754) describing the dataset, baseline ML models and potential research directions is accepted by the [Datasets and Benchmarks Track of NeurIPS 2023](https://nips.cc/Conferences/2023/CallForDatasetsBenchmarks).
+We will be dealing with a classification problem, where the training labels are not perfect. This is a common phenomenon in data science. Getting accurate ground true labels can be costly and time-consuming. Sometimes, it is even impossible. The weakly supervised learning is a subject that addresses the issue with imperfect labels. In particular, we are going to train a predictive model where label noises exist. 
 
-The *ClimSim* project and dataset provide endless opportunities for data science explorations from codes adaptation, feature engineering, model traning and evaluation, to result interpretation and data visualization. The *ClimSim* team hopes to engage the Machine Learning community at large to accelerate ML research for climate modeling. 
 
-Your project is to help the *ClimSim* project by addressing the following questions:
 
-* Is the *ClimSim* GitHub repo with its associated "quick start" guide and demo notebooks set up in a way to provide data scientists an easy entryway to play with the data set and contribute ideas?
-* Could one use collaborative cloud-based notebooks such as Google Colab or Huggingface Spaces to explore the dataset's numerous files on Huggingface? 
-* What data selection, visualizations and/or processing workflows could be created so that one could apply various ML/DL models on some aspects of the *ClimSim* data? This is especially interesting given the dataset is already on Huggingface, which hosts a large number of models for NLP and computer vision. 
-* What advanced ML/DL models could be applied to the *ClimSim* data set to improve the evaluation metrics?
+##### Dataset
 
-#### Dataset
-As described on the *ClimSim*'s [Data Information](https://leap-stc.github.io/ClimSim/dataset.html) page, there are three tiers of data sets:
+A noisy version of "CIFAR-10" dataset will be provided (on piazza). The original CIFAR-10 dataset consists of 32x32 colour images in 10 classes. For this task, random noises have been added to original dataset and you only have access to a small subset of clean labels. In particular, we provide a training set with 50,000 images in the directory `../data/images/` with:
+- noisy labels for all images provided in `../data/noisy_label.csv`;
+- clean labels for the first 10,000 images provided in `../data/clean_labels.csv`.
 
-* Tier 1: High-resolution data with real geography
-* Tier 2: Low-resolution data
-	* with real geography
-	* assuming an [aquaplanet](https://www.cesm.ucar.edu/models/simple/aquaplanet)
-* Tier 3: Quickstart toy data
+See the starter code for more details on loading and visualizing the data. 
 
-You could use data from any of the tiers for this project. 
 
-#### Challenge
-This project has two subchallenges. 
 
-**Challenge I (Oct 11, 2023 - Oct 21, 2023)** Reproducibility challenge. 
+##### Challenge
 
-Teams attempt to reproduce [the quickstart demo notebook](https://github.com/leap-stc/ClimSim/blob/main/demo_notebooks/quickstart_example.ipynb). 
+Your client is interested in creating an mobile AI program that **accurately classifies the images**. 
+The portability of this AI program (holding storage and memory cost) and the computational efficiency (test running time cost) are of great concern to your client. This translates to a balance between the complexity of variable/features/models used and the predictive performance. 
 
-* As a first step to get familiar with the dataset, reproduce the notebook on your local computer by forking the repo and following the instructions of [the quickstart guide](https://leap-stc.github.io/ClimSim/quickstart.html). 
-* Document clearly, in a report, local computing environment, steps taken for the successful reproduction, issues encountered and estimated time used for the full reproduction process. 
 
-**Challenge II (Oct 22, 2023 - Oct 30, 2023)** Machine Learning exploration challenge. 
+For this project, you are asked to build a predictive model for image classification using the imperfect dataset provided. A baseline logistic regression model that:
 
-Each team builds upon their own reproduced [quickstart demo notebook](https://github.com/leap-stc/ClimSim/blob/main/demo_notebooks/quickstart_example.ipynb) and explore in one or more of the following directions. 
+- uses RGB color histogram features; and 
+- treats the training set as if it has clean labels
 
-* **A quick start for R users**: Adapt the quickstart notebook and one of the baseline model notebook using R. 
+is provided in the starter code. 
 
-* **Cloud-based notebooks**: Could the quickstart notebook be implemented on Google Colab or Huggingface Spaces to enable a more automatic one-click "quicker start"? The notebook would need to set up the required computing environment first by installing the utility functions on the cloud instance. 
-	* For Google Colab, one could consider mount Google Drive to provide data access. The notebook should use relative path and provide clear data loading instructions for future users.
-	* For Huggingface Spaces, the quick start data set is already [on the Huggingface Hub](https://huggingface.co/datasets/LEAP/subsampled_low_res). The key is to figure out how to load the data correctly.
 
-* **Data loader**: The quickstart demo data set was proepared using the [preprocessing/create_npy_data_splits.ipynb](https://github.com/leap-stc/ClimSim/tree/main/preprocessing/create_npy_data_splits.ipynb) notebook. This notebook reads in data files from a local folder. Could this be revised to [read data files from the Huggingface hub](https://huggingface.co/docs/datasets/loading)? Could a user select data by specifying time range and subsampling scheme? 
+Assume that the **current practice (baseline)** on your client side is just using the logistic regression soley on the noisy data.
 
-* **Leveraging advanced ML models**: The *ClimSim* team prepared [a number of baseline models](https://leap-stc.github.io/ClimSim/models.html) notebooks on their GitHub. Please review them and reproduce any of their results first. It could be done locally or on the cloud. Teams are then invited to propose new models or expand any of the baseline models to improve one or multiple [the evaluation metrics](https://leap-stc.github.io/ClimSim/evaluating.html). 
- 
-Your final **in-class** presentation should share lessons learned during **Challenge II** that could be valuable to the *ClimSim* team:
+As expected, the overall performance of the baseline model is not satisfactory mainly due to two reasons. The first reason is that the model and feature extractor we used is not sophisticated enough. The toyish model we used for baseline is barely for the purpose of illustrating the workflow of building a predictive models for CIFAR-10 dataset. Therefore, you should consider a more complex model that will give a better prediction performance. The second reason is that we treat the noisy labels with error as if they are clean. Therefore, the model is actually learning from a untrustful source. There are many approaches to addressing the second issue in the literature. For example, [Inoue et al. (2017)](https://openaccess.thecvf.com/content_ICCV_2017_workshops/papers/w32/Inoue_Multi-Label_Fashion_Image_ICCV_2017_paper.pdf) suggests a "label-correction" approach - before feeding the training set to the predictive model, they use the small set with both clean and noisy label to train a label-correction model.  
 
-* How to make it easier for machine learning researchers to use the *ClimSim* data?
-* What machine learning models show great potential for the *ClimSim* data?
-* What information could be helpful for future new visitors to the *ClimSim* GitHub page?
 
-##### (Project) Evaluation criteria
 
-- Challenge I
-	- Is the reproduction successful?
-  	- Is the reproduction process clearly described?
-- Value of Challenge II exploration
-	- Does the exploration enable easier use of the *ClimSim* data?
-	- Does the exploration point to a promising direction for machine learning model development using the *ClimSim* data? 
-- Readiness for integration with the *ClimSim* project
-  - Are the cloud notebooks or GitHub repo ready to be linked to the *ClimSim* project page?
-  - Are the issues identified during the project formulated as actions that could be taken to improve the GitHub repo?
+To see how performance get improved by solving the two issues listed as above, you will be asked to build the following two predictive models:
+
+- **Model I**: this is a more sophisticated model (e.g. neural networks) than the baseline, while still treats the noisy labels as clean ones;
+- **Model II**: use exactly the same predictive model as in Model I, but add some extra models or procedures to address the label noise issue. You can replicate the method in  [Inoue et al. (2017)](https://openaccess.thecvf.com/content_ICCV_2017_workshops/papers/w32/Inoue_Multi-Label_Fashion_Image_ICCV_2017_paper.pdf) (with some simplification if you wish), or you can explore some other methods for weakly supervised learning.
+
+
+
+
+##### Evaluation criteria
+
+- Ease of reproducibility 
+  - Are the codes for the proposed methods well annotated and documented?
+  - Can the analysis be re-run nearly automatically in the Jupyter/R Notebook?
+- Out-of-sample performance 
+  - How close are the reported performances (presentation and online) to the performances on a hidden test set?
+  - Retrain the model on a new set of noisy labels, how close are the performances compared to the reported performances?
+- Portability of proposed strategies
+  - Computational speed for feature extraction and model training.
+  - Computational speed for prediction.
+  - Memory use for model training and prediction.
 - Presentation and organization
-  - Is the presentation clear about both the goals and findings of the exploration?
-  - Are the findings supported by adequate and appropriate evidence?
-  - Is the GitHub organized and prepared in a way that makes it easier for readers to understand the project's intended values and findings?
+  - Is the presentation convincing about the intuition of the proposed strategies?
+  - Is it supported by adequate and appropriate evidence?
+  - Is the GitHub organized and prepared in a way that makes it easier for readers to understand the proposed strategies and its advantages and limitations?
 
-*(More grading details will be posted as grading rubrics in courseoworks/canvas)*
+*(More details will be posted as grading rubrics in courseoworks/canvas)*
 
 
 #### Project details
 
-For this project, you are performing reproducibile research for an ongoing machine learning research project. Your task is **two-fold:** *evaluating* the reproducibility and ease of use of the project's assets and *exploring* other opportunities of building new capacities. 
+For this project, you are to carry out a business feasibility evaluation project that try to propose a **feasible** improvement over the current practice in terms of running cost (storage, memory and time) **and** prediction accuracy (average precision). 
 
-##### Project Deliverables
 
-+ Challenge I: reproducibility report as specified above. 
-+ Challenge II: a final presentation. The team should present their **exploration** for a new project capacity with supporting evidence.
+##### Final presentation
+For presentation, the team should present their **proposal** for an improvement and support this proposal with evidence on 
+
+- Performance improvement;
+- Running cost tradeoff;
+- Supporting evidence on why the proposed strategies make sense, such as intuitiveness of the weakly supervised strategy etc.
 
 The presentation can be technical but need to be accessible to your peer students in our class. 
 
+##### Platform requirement
+
+Your client will evalaute your report on a single personal computer that has `R` and `python` installed with 16GB memory.  
+
++ Your feature processing needs to be reasonably efficient as you will have **only 30 minutes to process 10,000 new images**. 
++ Your `main.ipynb`/`main.Rmd` should 
+	+ have a folder path as an input that point to the folder of training images. The folder structure of new images will have the same structure as the training data released to you (but without any labels);
+	+ and output a report on the performance (average precision and time cost) of the 3 models (*baseline*, *model I* and *model II*).
+	+ if you use tools outside `python`/`R`, please provide detailed instruction on the installation and use of these tools. 
+
 ##### Reproducibility requirement
 
-Each team should organize the project repo on GitHub in a reasonable way so that others could easily navigate your repo and reproduce your results.
+Each team should organize the project repo on GitHub according to the structure of the starter codes.
+
+```
+GitHub_proj/
+├──data/
+├──doc/
+├────main.ipynb
+├──figs/
+├──output/
+├──README.md
+```
+
+- In `data`, team members should individually save raw image data and csv files that contains clean and noisy labels for the images on their local computer. 
+- The `doc` folder should have documentations for this project, presentation files and other supporting materials. You should have a final `main.ipynb` or `main.Rmd` following the template given in the starter codes. Your `main.ipynb`/`main.Rmd` can assume that there is a data folder of raw images with subfolders corresponding to the training set and the test set.
+- The `figs` folder contains figure files produced during the project and running of the codes.
+- The `output` folder is the holding place for feature extracted, other intermediate and final results.
+
+The instructional team will download each team's GitHub repo and cross-examine each team's proposal for reproducibility on the current dataset and for reliability using a different dataset.
+
+
 
 ##### Suggested team workflow
 
-1. [wk1] Week 1 is the **learning** week. Read the *ClimSim* GitHub page, the paper and start reproducing the quick start notebook. 
+1. [wk1] Week 1 is the **planning** week. Read data description, fully understand the **project requirement**, and browse data and the starter codes.
 
-2. [wk1] As a team, brainstorm about possible choices of Challenge II based on the team's strength areas.
+2. [wk1] As a team, download the data, discuss data management need of this project, and try adapt the starter codes to a *subset* of images to a sense of computational burden of this project.
 
-4. [wk2] Finish reproducing the quick start notebook and summarize the process into a reproduction report. 
+3. [wk1] As a team, read and brainstorm about possible choices of model I and model II.
 
-5. [wk2] Week 2 is the **exploration** week. Explore different ideas for Challenge II.
+4. [wk2] Based on outcomes from week 1 brainstorm sessions, start data cleaning (start early on this one!)
 
-6. [wk 2+3] It is ok to have 2-3 leads to explore at the end of week 2 or the beginning of week 3 but it is better to converge on a single direction by the end of week 3.
+5. [wk2] Week 2 is the **exploration** week. Try different feature extractors and predictive models.
 
-7. [wk 3+4] Week 3/4 is the **evaluation** weeks. By the second half of week 3, you should have a clear plan on what capacity you would build for Challenge II (Start early!)
+6. [wk2] It is ok to have 2-3 leads to explore at the beginning of week 2 but it is better to converge on a single direction by the end of week 2.
 
-8. [wk 3+4] By end of week 3, you should layout a to-do list and divide up tasks for the final product. Teams should work together and resolve any ambiguity about which team member should be doing what for this project. This is **extremly important** for this project due to the computational nature of this project.
+7. [wk 3+4] Week 3/4 is program **evaluation** weeks. By the beginning of week 3, you should have a clear plan on what predictive model and weakly supervised learning method to consider. During the final week, there will be some serious model training, validation and testing, which is likely to take some time. (Start early!)
+
+8. [wk 3+4] By week 3, you should layout a to-do list and divide up tasks. Teams should work together and resolve any ambiguity about which team member should be doing what for this project. This is **extremly important** for this project due to the computational nature of this project.
+
+   
 
 ##### Working together
 
 - Setup a GitHub project folder with everyone listed as contributor. Everyone clones the project locally and create a local branch.
 - The data is too big to be stored on GitHub. You can edit  ".gitignore" so that you don't upload the  data to GitHub.
 - The team can work with subgroups of 2-3 work together more frequently than the entire team. However, everyone should check in regularly on group discussion online and changes in the GitHub folder.  
+
+
+##### Example starter codes
+
+As example, you can find in the GitHub starter codes an example using logistic regression. 
