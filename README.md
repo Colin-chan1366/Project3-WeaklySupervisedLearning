@@ -1,19 +1,17 @@
-# Project: ClimSim - Machine Learning for Climate Modeling
+# Project: Weakly supervised learning-- label noise and correction
 
 
 ### [Full Project Description](doc/project3_desc.md)
 
-<img src="https://leap-stc.github.io/ClimSim/_images/fig_1.png" alt="climsim" width="300"/>
-
 Term: Spring 2024
 
-+ Team 11
++ Team ##
 + Team members
-	+ Colin Chan
-	+ Sally Zhao
-	+ Shoufei Meng
-	+ Chulin Tang
-	+ Peng Jiang
+	+ team member 1
+	+ team member 2
+	+ team member 3
+	+ team member 4
+	+ team member 5
 
 + Project summary: In this project, we created ...
 	
