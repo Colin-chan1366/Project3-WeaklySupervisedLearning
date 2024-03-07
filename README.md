@@ -5,7 +5,7 @@
 
 Term: Spring 2024
 
-+ Team ##Group 11
++ Team: Group 11
 + Team members
 	+ Colin Chan
 	+ Sally Zhao
