@@ -17,6 +17,7 @@ Term: Spring 2024
 	
 
 **Contribution statement**: ([default](doc/a_note_on_contributions.md)) 
+
 	+ Colin Chan
 	+ Sally Zhao (model 1, model 2, visualizations)
 	+ Shoufei Meng
