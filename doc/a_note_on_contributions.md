@@ -13,7 +13,7 @@ Sample project README statement.
 
 Project 3
 
-Team members: Colin Chan, Sally Zhao, Shoufei Meng, Chulin Tang, Peng Jiang
+Team members: Jianfeng Chen(Colin), Sally Zhao, Shoufei Meng, Chulin Tang, Peng Jiang
 
 Summary: In this project, implements a CNN model with a Label Correction Network for image classification. It utilizes both clean and noisy labeled data for training. The CNN extracts image features, while the Label Correction Network learns to "clean" the noisy labels using the image features and original noisy labels. The model is trained on the noisy data, with the Label Correction Network regularizing the training process. Validation is performed on a separate dataset containing both clean and noisy labels, and the best model is saved based on validation accuracy. This semi-supervised approach leverages limited clean data and abundant noisy data for improved performance.
 
