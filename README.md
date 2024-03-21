@@ -20,7 +20,7 @@ Term: Spring 2024
 
 	+ Colin Chan (Literature study, model 1, model 2)
 	+ Sally Zhao (model 1, model 2, visualizations, in-class test predictions)
-	+ Shoufei Meng
+	+ Shoufei Meng (presentation)
 	+ Chulin Tang
 	+ Peng Jiang
 
